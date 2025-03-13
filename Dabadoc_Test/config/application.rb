@@ -6,6 +6,13 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# Pick the frameworks you want:
+require "active_model/railtie"
+require "active_job/railtie"
+# Comment out the next line if you're not using ActiveRecord
+# require "active_record/railtie"
+require "action_controller/railtie"
+
 module DabadocTest
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
@@ -18,6 +25,10 @@ module DabadocTest
 
     # Configuration for the application, engines, and railties goes here.
     #
+
+    config.generators do |g|
+      g.orm :mongoid
+    end
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
