@@ -24,10 +24,12 @@ class AuthController < ApplicationController
   private
 
   def login_params
-    params.permit(:email, :password)
+    # Handle both nested and non-nested parameters
+    params[:auth] ? params.require(:auth).permit(:email, :password) : params.permit(:email, :password)
   end
 
   def registration_params
-    params.permit(:email, :password, :password_confirmation)
+    # Handle both nested and non-nested parameters
+    params[:auth] ? params.require(:auth).permit(:email, :password, :password_confirmation) : params.permit(:email, :password, :password_confirmation)
   end
 end

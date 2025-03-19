@@ -1,17 +1,26 @@
 class LikeController < ApplicationController
-  before_action :authenticate_user!
-  def add_like
-    @question = Question.find(params[:question_id])
-    @like = current_user.likes.build(question: @question)
-
-    if @like.save
-      render json: { status: 'success', message: 'Liked successfully' }, status: :created
-    else
-      render json: { status: 'error', message: @like.errors.full_messages }, status: :unprocessable_entity
+  before_action :authenticate_request
+  
+  def toggle_like
+    if params[:question_id].blank?
+      render json: { status: 'error', message: 'Question ID is required' }, status: :bad_request
+      return
     end
-  end
 
-  def removeLike
-
+    question = Question.find_by(id: params[:question_id])
+    
+    if question.nil?
+      render json: { status: 'error', message: 'Question not found' }, status: :not_found
+      return
+    end
+    
+    like_service = LikeService.new
+    result = like_service.like_question(@current_user, question)
+    
+    if result[:status] == 'success'
+      render json: result, status: :ok
+    else
+      render json: result, status: :unprocessable_entity
+    end
   end
 end

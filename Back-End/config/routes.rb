@@ -9,6 +9,12 @@ Rails.application.routes.draw do
   # Question routes
   post 'question/create', to: 'question#create_question'
   get 'question/get/questions', to: 'question#get_questions'
+
+  # Answer routes
+  post 'answer/create', to: 'answer#add_answer'
+
+  # Like routes
+  post 'like', to: 'like#toggle_like'
   # Defines the root path route ("/")
   # root "posts#index"
 end

@@ -8,7 +8,7 @@ class Question
 
   belongs_to :user
   has_many :answers
-  has_many :likes
+  has_many :likes, dependent: :destroy
 
   validates :title, :content, :location, presence: true
 end

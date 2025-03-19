@@ -42,10 +42,8 @@
       end
 
       begin
-        # Find user by email
         user = UserRepository.find_by_email(params[:email])
 
-        # Authenticate user
         if user&.authenticate(params[:password])
           token = JwtService.encode(user_id: user.id)
           return ServiceResult.success({ token: token, user: { email: user.email, user_id: user.id } })
