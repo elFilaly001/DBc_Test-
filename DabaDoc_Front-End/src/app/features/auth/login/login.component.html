@@ -1,0 +1,52 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h2 class="auth-title">Login</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <!-- Show error message if registration fails -->
+      <div *ngIf="errorMessage" class="alert-error">
+        {{ errorMessage }}
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          formControlName="email"
+          id="email"
+          placeholder="Enter your email"
+          [ngClass]="{ 'is-invalid': submitted && formControl['email'].errors }"
+        />
+        <div *ngIf="submitted && formControl['email'].errors" class="error-message">
+          <div *ngIf="formControl['email'].errors['required']">Email is required</div>
+          <div *ngIf="formControl['email'].errors['email']">Please enter a valid email</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          formControlName="password"
+          id="password"
+          placeholder="Enter your password"
+          [ngClass]="{ 'is-invalid': submitted && formControl['password'].errors }"
+        />
+        <div *ngIf="submitted && formControl['password'].errors" class="error-message">
+          <div *ngIf="formControl['password'].errors['required']">Password is required</div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="loading">
+          <span *ngIf="loading">Login...</span>
+          <span *ngIf="!loading">Login</span>
+        </button>
+      </div>
+
+      <div class="auth-footer">
+        <p>Already have an account? <a routerLink="/register">Register</a></p>
+      </div>
+    </form>
+  </div>
+</div>
